@@ -1,5 +1,5 @@
 # TeslaCamPi
-Use your Raspberry Pi as a TeslaCam USB drive and upload your snapshots to DropBox on the fly 
+Use your Raspberry Pi as a TeslaCam USB drive and upload your snapshots to DropBox on the fly within wifi 
 
 References:
 https://www.raspberrypi.org/magpi/pi-zero-w-smart-usb-flash-drive/
