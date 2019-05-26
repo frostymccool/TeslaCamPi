@@ -2,7 +2,8 @@
 
 # Auto uploader to dropbox
 # Monitor TeslaCam, syncing up to dropbox
-# Assumes to be run as a cronjob
+# Assumes to be run as a cronjob (every 5 mins)
+# */5 * * * * /home/pi/dropbox-sync.py
 
 # original reference source: https://www.raspberrypi.org/forums/viewtopic.php?t=164166
 # requires: https://github.com/andreafabrizi/Dropbox-Uploader
@@ -14,7 +15,7 @@ from subprocess import Popen, PIPE
 #The directory to sync
 syncdir="/home/mnt/cam/TeslaCam"
 #Path to the Dropbox-uploaded shell script
-uploader = "/home/pi/Dropbox-Uploader/dropbox_uploader.sh"
+uploader = "/home/pi/dropbox_uploader.sh"
 
 #If 1 then files will be uploaded. Set to 0 for testing
 upload = 1
