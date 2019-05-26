@@ -1,4 +1,4 @@
-#!/bin/env/python
+#!/usr/bin/python
 
 # Auto uploader to dropbox
 # Monitor TeslaCam, syncing up to dropbox
