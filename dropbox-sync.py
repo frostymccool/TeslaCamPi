@@ -13,7 +13,7 @@ import subprocess
 from subprocess import Popen, PIPE
 
 #The directory to sync
-syncdir="/home/mnt/cam/TeslaCam"
+syncdir="/mnt/cam/TeslaCam"
 #Path to the Dropbox-uploaded shell script
 uploader = "/home/pi/dropbox_uploader.sh"
 
