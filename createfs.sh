@@ -1,6 +1,11 @@
 #!/bin/bash -eu
 
 # setup dedicated partition for sole use with TeslaCam
+# create physical partitions and virtual drive
+# create local filesystem mount point
+# update rc.local to mount local and gadget filesystem on boot
+
+# run as su, no parameters
 
 # references:
 #    https://github.com/cimryan/teslausb
@@ -42,3 +47,6 @@ then
 else
   echo "$RCL_PATH already up to date"
 fi
+
+# :)
+echo "Filsystems created, ready to reboot, CAM will mount via ota gadget on boot"
