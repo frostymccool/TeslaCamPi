@@ -63,7 +63,7 @@ fi
 if ! grep -q "dwc2,g_ether" $CMDLINE_TXT_PATH
 then
   echo "Updating $CMDLINE_TXT_PATH ..."
-  sed -i'.bak' -e "s/rootwait/rootwait modules-load=dwc2,g_ether/" -e "s@ init=/usr/lib/raspi-config/init_resize.sh@@" "$CMDLINE_TXT_PATH"
+  sed -i'.bak' -e "s/rootwait/rootwait modules-load=dwc2,g_ether/" -e "s/ init=/usr/lib/raspi-config/init_resize.sh//" "$CMDLINE_TXT_PATH"
 else
   echo "$CMDLINE_TXT_PATH already updated with modules and removed initial resize script."
 fi
