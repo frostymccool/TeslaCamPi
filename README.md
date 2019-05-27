@@ -13,35 +13,20 @@ https://github.com/cimryan/teslausb/
 Create Fresh Raspian sd card
 
 Setup cmdline.txt and config.txt adding otg params - no resize in cmdline by using (from mac cmdline)
+
 ./prepPiForFristBoot.sh teslapi
+https://github.com/frostymccool/teslausb/master/setup/pi
 
-https://github.com/frostymccool/teslausb/tree/master/setup/pi
+boot into pi
 
-# Reuse the partition/fs creation code from cimryan
-curl --fail -o "/tmp/create-backingfiles-partition.sh"  "https://raw.githubusercontent.com/frostymccool/teslausb/tree/master/setup/pi/create-backingfiles-partition.sh"
-chmod +x /tmp/create-backingfiles-partition.sh
-curl --fail -o "/tmp/create-backingfiles.sh"  "https://raw.githubusercontent.com/frostymccool/teslausb/tree/master/setup/pi/create-backingfiles.sh"
-chmod +x /tmp/create-backingfiles.sh
+curl --fail -o "/tmp/createfs.sh" "https://raw.githubusercontent.com/frostymccool/TeslaCamPi/master/createfs.sh"
+chmod +x /tmp/createfs/sh
+sudo /tmp/createfs.sh
 
-# Create folder for the partition housing for teslacam and music (will be /dev/mmcblk0p3)
-USBFS_PARTITION_MNT=/usbfs-partition
-sudo mkdir "USBFS_PARTITION_MNT"
-# Create folder for the partition housing active scripts (main partition will be ro for protection of filesystem, so script partition used for rw)  (will be /dev/mmcblk0p4)
-SCRIPT_PARTITION_MNT=/script-partition
-sudo mkdir /script-partition
+# Filesystem created and ready to reboot to mount ota
+sudo reboot
 
-# create the partitions and setup fstab for automount
-sudo /tmp/create-backingfiles-partition.sh "$USBFS_PARTITION_MNT" "$SCRIPT_PARTITION_MNT"
-sudo mount -a
-
-# create the fat filesystem and folder for the cam, allocating 100% to it (cimryan also creates music folder).. 
-sudo /tmp/create-backingfiles.sh "100" "$USBFS_PARTITION_MNT"
-
-# ….. Now filesystem created
-
-# …. TBD Need to mount on the ota ..
-
-# ----
+# ---- WIP....
 
 # Add auto dropbox sync
 curl "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" -o /home/pi/dropbox_uploader.sh
