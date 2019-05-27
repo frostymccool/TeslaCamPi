@@ -25,3 +25,6 @@ sudo mount -a
 
 #create the fat filesystem and folder for the cam, allocating 100% to it (cimryan also creates music folder).. 
 sudo /tmp/create-backingfiles.sh "100" "$USBFS_PARTITION_MNT"
+
+#Update rc.local to mount the cam filesystem, fsck and then mount it clean to the usb gadget
+#......
