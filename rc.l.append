@@ -1,0 +1,15 @@
+# could mount ota before normal mount, but want to fsck first
+#/sbin/modprobe g_mass_storage
+
+# wait for the partition to mount and then mount the cam partition
+_MNT_CAM=$(/bin/findmnt --mountpoint /mnt/cam) || _MNT_CAM="needm"
+if [ "$_MNT_CAM" = "needm" ]; then
+  printf "Mouting Teslacam drive /mnt/cam\n"
+  /bin/mount /mnt/cam
+  /sbin/fsck -p /mnt/cam || printf "catch fsck exit error"
+  # /bin/sleep 10
+fi
+# Now we have clean FS, Mount on the ota ..
+/sbin/modprobe g_mass_storage
+
+exit 0
