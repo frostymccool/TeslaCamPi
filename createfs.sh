@@ -41,5 +41,5 @@ then
   sed -i'.bak' -e "s/exit 0//" "$RCL_PATH"
   cat $RCAPP_PATH >> $RCL_PATH
 else
-  echo "$RCAPP_PATH already up to date"
+  echo "$RCL_PATH already up to date"
 fi
