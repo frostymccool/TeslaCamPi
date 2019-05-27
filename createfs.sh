@@ -41,9 +41,14 @@ mount -a
 #Update rc.local to mount the cam filesystem, fsck and then mount it clean to the usb gadget
 if ! grep -q "needm" $RCL_PATH
 then
-  echo "updating $RCL_PATH"
-  sed -i'.bak' -e "s/exit 0//" "$RCL_PATH"
-  cat $RCAPP_PATH >> $RCL_PATH
+  if [ -e $RCAPP_PATH ]
+  then
+    echo "updating $RCL_PATH"
+    sed -i'.bak' -e "s/exit 0//" "$RCL_PATH"
+    cat $RCAPP_PATH >> $RCL_PATH
+  else
+    echo "!! $RCAPP_PATH missing"
+  fi
 else
   echo "$RCL_PATH already up to date"
 fi
