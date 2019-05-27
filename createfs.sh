@@ -13,14 +13,13 @@ SCRIPT_PARTITION_MNT=/script-partition
 
 
 # Reuse the partition/fs creation code from cimryan
-curl --fail -o "/tmp/create-backingfiles-partition.sh"  "https://raw.githubusercontent.com/frostymccool/teslausb/tree/master/setup/pi/create-backingfiles-partition.sh"
+curl --fail -o "/tmp/create-backingfiles-partition.sh"  "https://raw.githubusercontent.com/frostymccool/teslausb/master/setup/pi/create-backingfiles-partition.sh"
 chmod +x /tmp/create-backingfiles-partition.sh
-curl --fail -o "/tmp/create-backingfiles.sh"  "https://raw.githubusercontent.com/frostymccool/teslausb/tree/master/setup/pi/create-backingfiles.sh"
+curl --fail -o "/tmp/create-backingfiles.sh"  "https://raw.githubusercontent.com/frostymccool/teslausb/master/setup/pi/create-backingfiles.sh"
 chmod +x /tmp/create-backingfiles.sh
 
 # Grab updates to rc.local
-curl --fail -o "$RCAPP_PATH" "https://raw.githubusercontent.com/frostymccool/TeslaCamPi/tree/master/$RCAPP_NAME"
- 
+curl --fail -o "$RCAPP_PATH" "https://raw.githubusercontent.com/frostymccool/TeslaCamPi/master/$RCAPP_NAME" 
 
 # Create folder for the partition housing for teslacam and music (will be /dev/mmcblk0p3)
 mkdir "USBFS_PARTITION_MNT"
