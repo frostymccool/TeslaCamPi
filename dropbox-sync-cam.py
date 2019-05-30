@@ -8,6 +8,8 @@
 # original reference source: https://www.raspberrypi.org/forums/viewtopic.php?t=164166
 # requires: https://github.com/andreafabrizi/Dropbox-Uploader
 
+#TODO: add wifi online checker before running check and upload section
+
 import time
 import os
 import subprocess
