@@ -25,7 +25,8 @@ overwrite = 0
 recursive = 1
 #Delete local file on successfull upload
 deleteLocal = 0
-
+#complete list of filesCopied that are pending deletion (if deleteLocal is set)
+filesCopied = list()
 
 
 #Prints indented output
@@ -98,9 +99,10 @@ def upload_files(path, level):
                 print_output("Uploading File: " + f,level+1)   
                 if upload_file(fullFilePath, relativeFilePath) == 1:
                     print_output("Uploaded File: " + f,level + 1)
-                    if deleteLocal == 1:
-                        print_output("Deleting File: " + f,level + 1)
-                        os.remove(fullFilePath)                        
+                    filesCopied.append(fullFilePath)
+                    #if deleteLocal == 1:
+                    #    print_output("Deleting File: " + f,level + 1)
+                    #    os.remove(fullFilePath)                        
                 else:
                     print_output("Error Uploading File: " + f,level + 1)
                     
@@ -117,3 +119,13 @@ def upload_files(path, level):
                 
 #Start
 upload_files("",1)
+
+# copy all the files first then delete separately... break up to slot in the unload/load gadget sequence for speed
+if deleteLocal == 1:
+    for f in filesCopied:
+        print("Deleting File: " + f)
+        os.remove(f)
+    
+    
+
+    
