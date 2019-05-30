@@ -5,7 +5,9 @@
 
 # assumes the usb cam filesystem is mounted
 # runs an fsck before mounting the gadget
-# sets up a handler to monitor the for changed on the usb ota filesystem
+# sets up a handler to monitor the for changed on the usb ota filesystem *****!!!! ug noooo this actually checks local, not gadget!!!!
+### as the bin file time stamp updates when writes occur from gadget side, then check this maybe..
+
 # after a duration of x following the the first filesystem update, the filesystem is unmounted / cleaned / 
 #  resynced and remounted
 # that updates the local filesystem cache which will then allow follow on code to check for changes...
