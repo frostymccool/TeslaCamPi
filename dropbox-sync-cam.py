@@ -8,6 +8,7 @@
 # original reference source: https://www.raspberrypi.org/forums/viewtopic.php?t=164166
 # requires: https://github.com/andreafabrizi/Dropbox-Uploader
 
+import time
 import os
 import subprocess
 from subprocess import Popen, PIPE
@@ -24,9 +25,17 @@ overwrite = 0
 #If 1 then crawl sub directories for files to upload
 recursive = 1
 #Delete local file on successfull upload
-deleteLocal = 0
+deleteLocal = 1
 #complete list of filesCopied that are pending deletion (if deleteLocal is set)
 filesCopied = list()
+
+USB_CAM_SHARE_MOUNT_POINT = "/mnt/cam"
+CMD_MOUNT_LOCAL = "mount "+USB_CAM_SHARE_MOUNT_POINT
+CMD_UNMOUNT_LOCAL = "umount "+USB_CAM_SHARE_MOUNT_POINT
+CMD_MOUNT_GADGET = "modprobe g_mass_storage" 
+CMD_UNMOUNT_GADGET = "modprobe -r g_mass_storage"
+CMD_SYNC = "sync"
+CMD_FSCK = "fsck -a "+USB_CAM_SHARE_MOUNT_POINT # make sure fsck the filesystem - just in case :)
 
 
 #Prints indented output
@@ -118,14 +127,46 @@ def upload_files(path, level):
 
                 
 #Start
+
+#get fresh update from gadget i/o, mount cycle the local mount point
+os.system(CMD_UNMOUNT_LOCAL)
+os.system(CMD_MOUNT_LOCAL)
+
+# upload the new files to dropbox
 upload_files("",1)
 
 # copy all the files first then delete separately... break up to slot in the unload/load gadget sequence for speed
-if deleteLocal == 1:
-    for f in filesCopied:
-        print("Deleting File: " + f)
-        os.remove(f)
+# umount the gadget before any local file update, otherwise unpredictable results can occur!
+if (deleteLocal == 1) & (len(filesCopied)>0):
+    gadgetStopped=1
+    try:
+        os.system(CMD_UNMOUNT_GADGET)
+        print("Gadget stopped")
+    except:
+        gadgetStopped=0
+
+    time.sleep(1)
+    try:
+        os.system(CMD_SYNC)
+        time.sleep(1)
+        os.system(CMD_FSCK)  # fsck will kick out sometimes
+    except:
+        time.sleep(1)
     
-    
+    # If gadget not stopped successfully then no deletes (otherwise potential fs corruption)
+    if gadgetStopped:
+        # remove all the files to complete the 'move'
+        for f in filesCopied:
+            print("Deleting File: " + f)
+            os.remove(f)
+
+    # remount the gadget for continued updates from TeslaCam/Sentry
+    # There appears to be some catchup caching going on, so need to wait before re-mounting the gadget
+    os.system(CMD_SYNC)
+    time.sleep(2)
+    os.system(CMD_MOUNT_GADGET)
+    print("Gadget started")
+else:
+    print("No files uploaded, no files to delete")
 
     
